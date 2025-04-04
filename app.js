@@ -8,6 +8,7 @@ const { xss } = require('express-xss-sanitizer');
 const hpp = require('hpp')
 const cookieParser = require('cookie-parser')
 const cors = require('cors');
+const compression = require('compression')
 
 const AppError = require('./utils/appError')
 const globalErrorHandler = require('./controllers/errorController')
@@ -32,6 +33,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 // app.use(helmet())
 
 app.use(cors());
+
+app.use(compression())
 
 // Dev Logging
 if (process.env.NODE_ENV === 'development') {
