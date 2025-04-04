@@ -33,7 +33,9 @@ export const logout = async () => {
             url: '/api/v1/users/logout',
         });
         
-        if(res.data.status === 'success') location.replace('http://127.0.0.1:8000/');
+        if(res.data.status === 'success') window.setTimeout(() => {
+            location.assign('/');
+        }, 500)
     } catch(err) {
         showAlert('error', 'Error logging out! Try again')
     }
