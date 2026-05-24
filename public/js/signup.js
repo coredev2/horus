@@ -34,16 +34,17 @@ export const signUp = async (
     button.textContent = originalButtonText;
     button.disabled = false;
 
-    if (
-      error.response.data.message.startsWith(
-        'User validation failed: passwordConfirm',
-      )
-    ) {
+    const errorMessage = error.response?.data?.message;
+
+    if (errorMessage?.startsWith('User validation failed: passwordConfirm')) {
       showAlert('error', 'Passwords are not the same!');
-    } else if (error.response.data.message.startsWith('E11000')) {
+    } else if (errorMessage?.startsWith('E11000')) {
       showAlert('error', 'Email already exists!');
     } else {
-      showAlert('error', error.response.data.message);
+      showAlert(
+        'error',
+        errorMessage || 'Something went wrong. Please try again.',
+      );
     }
   }
 };

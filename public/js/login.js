@@ -26,9 +26,11 @@ export const login = async (email, password, button) => {
     button.textContent = originalButtonText;
     button.disabled = false;
 
-    if (error.response) {
-      showAlert('error', error.response.data.message);
-    }
+    const errorMessage = error.response?.data?.message;
+    showAlert(
+      'error',
+      errorMessage || 'Something went wrong. Please try again.',
+    );
   }
 };
 
