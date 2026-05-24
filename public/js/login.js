@@ -1,9 +1,10 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
-import { resetButtonLoading, setButtonLoading } from './buttonLoading';
 
 export const login = async (email, password, button) => {
-  setButtonLoading(button, 'Logging in...');
+  const originalButtonText = button.textContent;
+  button.textContent = 'Logging in...';
+  button.disabled = true;
 
   try {
     const res = await axios({
@@ -22,7 +23,8 @@ export const login = async (email, password, button) => {
       }, 500);
     }
   } catch (error) {
-    resetButtonLoading(button);
+    button.textContent = originalButtonText;
+    button.disabled = false;
 
     if (error.response) {
       showAlert('error', error.response.data.message);

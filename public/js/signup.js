@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { showAlert } from './alerts';
-import { resetButtonLoading, setButtonLoading } from './buttonLoading';
 
 export const signUp = async (
   name,
@@ -9,7 +8,9 @@ export const signUp = async (
   passwordConfirm,
   button,
 ) => {
-  setButtonLoading(button, 'Signing up...');
+  const originalButtonText = button.textContent;
+  button.textContent = 'Signing up...';
+  button.disabled = true;
 
   try {
     const res = await axios({
@@ -30,7 +31,8 @@ export const signUp = async (
       }, 500);
     }
   } catch (error) {
-    resetButtonLoading(button);
+    button.textContent = originalButtonText;
+    button.disabled = false;
 
     if (
       error.response.data.message.startsWith(
